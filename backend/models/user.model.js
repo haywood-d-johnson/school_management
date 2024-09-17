@@ -1,8 +1,10 @@
 const { DataTypes } = require("sequelize");
+const ADDRESS = require("./address.model");
 
 module.exports = (sequelize, Sequelize) => {
     const USER = sequelize.define("user", {
         user_id: {
+            type: DataTypes.INTEGER,
             primaryKey: true,
             autoIncrement: true,
         },
@@ -40,6 +42,10 @@ module.exports = (sequelize, Sequelize) => {
         address_id: {
             type: DataTypes.INTEGER,
             allowNull: false,
+            refernces: {
+                model: ADDRESS,
+                key: "address_id",
+            },
         },
         roles: {
             type: DataTypes.STRING,
@@ -60,8 +66,6 @@ module.exports = (sequelize, Sequelize) => {
             },
         },
     });
-
-    USER.hasOne(ADDRESS, { foreignKey: address_id });
 
     return USER;
 };
